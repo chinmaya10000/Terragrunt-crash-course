@@ -6,7 +6,7 @@ include {
     path = find_in_parent_folders()
 }
 
-inputs {
+inputs = {
     env = "dev"
     azs = ["us-east-2a", "us-east-2b"]
     private_subnets = ["10.0.0.0/19", "10.0.32.0/19"]

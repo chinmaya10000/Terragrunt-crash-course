@@ -13,6 +13,6 @@ terraform {
     required_version = ">= 1.0"
 
     backend "local" {
-      path = "dev/vpc/terraform.tfstate"
+      path = "staging/vpc/terraform.tfstate"
     }
 }

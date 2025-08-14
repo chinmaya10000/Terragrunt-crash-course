@@ -20,7 +20,7 @@ resource "aws_route_table" "public" {
   }
 
   tags = {
-    Name = "${var.env}-public-route-table"
+    Name = "${var.env}-public"
   }
 }
 

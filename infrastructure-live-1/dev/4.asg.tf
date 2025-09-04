@@ -115,6 +115,7 @@ resource "aws_autoscaling_policy" "cpu_policy" {
       predefined_metric_type = "ASGAverageCPUUtilization"
     }
     target_value = 50.0  # Keep average CPU around 50%
+    disable_scale_in = false
   }
 }
 

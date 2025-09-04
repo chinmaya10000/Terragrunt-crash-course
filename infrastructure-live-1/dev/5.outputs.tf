@@ -17,8 +17,3 @@ output "alb_dns_name" {
   description = "The DNS name of the Application Load Balancer"
   value       = aws_alb.app_alb.dns_name
 }
-
-output "web_tg_arn" {
-  description = "The ARN of the web target group"
-  value       = aws_lb_target_group.web-tg.arn
-}

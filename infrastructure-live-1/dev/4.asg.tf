@@ -24,8 +24,8 @@ resource "aws_iam_role" "ssm-role" {
   name = "${local.env}-ssm-role"
 
     assume_role_policy = jsonencode({
-        version = "2012-10-17"
-        statement = [{
+        Version = "2012-10-17"
+        Statement = [{
             Effect = "Allow",
             Principal = {
                 Service = "ec2.amazonaws.com"

@@ -110,7 +110,7 @@ resource "aws_lb_listener_rule" "api_rule" {
 # Listener Rule: /app -> APP TG
 resource "aws_lb_listener_rule" "app_rule" {
   listener_arn = aws_lb_listener.http.arn
-  priority     = 100
+  priority     = 101
 
   action {
     type             = "forward"

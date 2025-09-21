@@ -1,8 +1,7 @@
-# Security Group for ALB
 resource "aws_security_group" "alb_sg" {
-  name        = "${local.env}-alb-sg"
+  name        = "${var.env}-alb-sg"
   description = "Allow HTTP/HTTPS inbound traffic"
-  vpc_id      = aws_vpc.main.id
+  vpc_id      = var.vpc_id
 
   ingress {
     from_port   = 80
@@ -23,26 +22,26 @@ resource "aws_security_group" "alb_sg" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 
-  tags = { Name = "${local.env}-alb-sg" }
+  tags = { Name = "${var.env}-alb-sg" }
 }
 
-# Application Load Balancer
+# Create the ALB
 resource "aws_lb" "app_alb" {
-  name               = "${local.env}-alb"
+  name               = "${var.env}-alb"
   internal           = false 
   load_balancer_type = "application"
   security_groups    = [ aws_security_group.alb_sg.id ]
-  subnets            = [for subnet in aws_subnet.public : subnet.id]
+  subnets            = var.public_subnet_ids
 
-  tags               = { Name = "${local.env}-alb" }
+  tags = { Name = "${var.env}-alb" }
 }
 
 # Target Group for API
 resource "aws_lb_target_group" "api_tg" {
-  name     = "${local.env}-api-tg"
+  name     = "${var.env}-api-tg"
   port     = 80
   protocol = "HTTP"
-  vpc_id   = aws_vpc.main.id
+  vpc_id   = var.vpc_id
 
   health_check {
     path                = "/api/"
@@ -57,27 +56,27 @@ resource "aws_lb_target_group" "api_tg" {
 
 # Target Group for APP
 resource "aws_lb_target_group" "app_tg" {
-  name = "${local.env}-app-tg"
-  port = 80
+  name     = "${var.env}-app-tg"
+  port     = 80
   protocol = "HTTP"
-  vpc_id = aws_vpc.main.id
+  vpc_id   = aws_vpc.main.id
 
   health_check {
-    path = "/app/"
-    interval = 30
-    timeout = 5
-    healthy_threshold = 5
+    path                = "/app/"
+    interval            = 30
+    timeout             = 5
+    healthy_threshold   = 5
     unhealthy_threshold = 2
-    matcher = "200"
-    protocol = "HTTP"
+    matcher             = "200"
+    protocol            = "HTTP"
   }
 }
 
 # Listener for ALB
 resource "aws_lb_listener" "http" {
   load_balancer_arn = aws_alb.app_alb.arn
-  port = "80"
-  protocol = "HTTP"
+  port              = "80"
+  protocol          = "HTTP"
 
   default_action {
     type = "fixed-response"

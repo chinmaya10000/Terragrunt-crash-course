@@ -42,6 +42,12 @@ resource "aws_iam_policy_attachment" "ssm_policy_attachment" {
   policy_arn = "arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore"
 }
 
+resource "aws_iam_policy_attachment" "cloudwatch_agent_policy_attachment" {
+  name       = "${local.env}-cloudwatch-agent-policy-attachment"
+  roles      = [aws_iam_role.ssm-role.name]
+  policy_arn = "arn:aws:iam::aws:policy/CloudWatchAgentServerPolicy" 
+}
+
 # Create Instance Profile for the role
 resource "aws_iam_instance_profile" "ssm_instance_profile" {
   name = "${local.env}-ssm-instance-profile"
@@ -77,7 +83,7 @@ resource "aws_launch_template" "app-lt" {
 resource "aws_autoscaling_group" "app-asg" {
   name             = "${local.env}-app-asg"
   desired_capacity = 2
-  max_size         = 3
+  max_size         = 5
   min_size         = 1
 
   vpc_zone_identifier       = [for s in aws_subnet.private : s.id]

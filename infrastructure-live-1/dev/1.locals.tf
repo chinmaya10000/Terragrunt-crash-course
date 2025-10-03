@@ -1,9 +1,9 @@
 locals {
-  aws_region = "us-east-2"
+  aws_region = "ap-south-1"
   vpc_cidr = "10.0.0.0/16"
   env = "dev"
 
-  azs = ["us-east-2a", "us-east-2b"]
+  azs = ["ap-south-1a", "ap-south-1b"]
   public_subnets = ["10.0.0.0/19", "10.0.32.0/19"]
 
   private_subnets = {

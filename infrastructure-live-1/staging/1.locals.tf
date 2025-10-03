@@ -1,9 +1,9 @@
 locals {
-  aws_region = "us-east-2"
+  aws_region = "ap-south-1"
   vpc_cidr = "10.0.0.0/16"
   env = "staging"
 
-  azs = ["us-east-2a", "us-east-2b", "us-east-2c"]
+  azs = ["ap-south-1a", "ap-south-1b", "ap-south-1c"]
   public_subnets = ["10.0.0.0/19", "10.0.32.0/19", "10.0.64.0/19"]
 
   private_subnets = {
@@ -12,6 +12,6 @@ locals {
     private_3 = { cidr = cidrsubnet(local.vpc_cidr, 3, 4), az   = local.azs[2] }
   }
 
-  image_id = "ami-0b016c703b95ecbe4"
+  image_id = "ami-0f9708d1cd2cfee41"
   instance_type = "t3.micro"
 }
